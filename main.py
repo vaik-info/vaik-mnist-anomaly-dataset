@@ -93,7 +93,7 @@ def get_mask(pil_image, process_pil_image):
 
 
 def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_min_size, x, y):
-    output_good_sub_dir_path = os.path.join(output_sub_dir_path, 'good')
+    output_good_sub_dir_path = os.path.join(output_sub_dir_path, 'raw', 'good')
     os.makedirs(output_good_sub_dir_path, exist_ok=True)
     for file_index in tqdm(range(int(sample_num * (1. - anomaly_ratio))), desc=f'write at {output_sub_dir_path}'):
         mnist_index = random.randint(0, y.shape[0] - 1)
@@ -102,8 +102,6 @@ def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_
             random.randint(image_min_size, image_max_size), random.randint(image_min_size, image_max_size)))
         pil_image.save(os.path.join(output_good_sub_dir_path, f'{file_index:04d}_{mnist_index:02d}.png'))
 
-    output_anomaly_sub_dir_path = os.path.join(output_sub_dir_path, 'anomaly')
-    os.makedirs(output_anomaly_sub_dir_path, exist_ok=True)
     process_dict = {
         "line": draw_line,
         "point": draw_point,
@@ -117,12 +115,12 @@ def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_
 
         process_key = random.choice(list(process_dict.keys()))
         process_pil_image = process_dict[process_key](pil_image)
-        output_anomaly_sub_key_raw_dir_path = os.path.join(output_anomaly_sub_dir_path, 'test', process_key)
+        output_anomaly_sub_key_raw_dir_path = os.path.join(output_sub_dir_path, 'raw', process_key)
         os.makedirs(output_anomaly_sub_key_raw_dir_path, exist_ok=True)
         process_pil_image.save(
             os.path.join(output_anomaly_sub_key_raw_dir_path, f'{file_index:04d}_{mnist_index:02d}.png'))
 
-        output_anomaly_sub_key_gt_dir_path = os.path.join(output_anomaly_sub_dir_path, 'ground_truth', process_key)
+        output_anomaly_sub_key_gt_dir_path = os.path.join(output_sub_dir_path, 'ground_truth', process_key)
         os.makedirs(output_anomaly_sub_key_gt_dir_path, exist_ok=True)
         diff_pil_image = get_mask(pil_image, process_pil_image)
         diff_pil_image.save(os.path.join(output_anomaly_sub_key_gt_dir_path, f'{file_index:04d}_{mnist_index:02d}.png'))
@@ -143,7 +141,7 @@ def main(output_dir_path, target_digit, train_sample_num, train_anomaly_ratio, v
     output_valid_dir_path = os.path.join(output_dir_path, 'valid')
     write(output_valid_dir_path, valid_sample_num, valid_anomaly_ratio, image_max_size, image_min_size, x_test, y_test)
 
-    shutil.move(os.path.join(output_valid_dir_path, 'good'), os.path.join(output_valid_dir_path, 'anomaly/test/good'))
+
 
 
 if __name__ == '__main__':
