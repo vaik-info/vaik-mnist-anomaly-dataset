@@ -138,6 +138,10 @@ def main(output_dir_path, target_digit, train_sample_num, train_anomaly_ratio, v
     write(output_train_dir_path, train_sample_num, train_anomaly_ratio, image_max_size, image_min_size, x_train,
           y_train)
 
+    output_train_dir_path = os.path.join(output_dir_path, 'train_valid')
+    write(output_train_dir_path, valid_sample_num, valid_anomaly_ratio, image_max_size, image_min_size, x_train,
+          y_train)
+
     output_valid_dir_path = os.path.join(output_dir_path, 'valid')
     write(output_valid_dir_path, valid_sample_num, valid_anomaly_ratio, image_max_size, image_min_size, x_test, y_test)
 
