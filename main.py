@@ -128,11 +128,14 @@ def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_
         diff_pil_image.save(os.path.join(output_anomaly_sub_key_gt_dir_path, f'{file_index:04d}_{mnist_index:02d}.png'))
 
 
-def main(output_dir_path, train_sample_num, train_anomaly_ratio, valid_sample_num, valid_anomaly_ratio, image_max_size,
+def main(output_dir_path, target_digit, train_sample_num, train_anomaly_ratio, valid_sample_num, valid_anomaly_ratio, image_max_size,
          image_min_size):
     mnist = tf.keras.datasets.mnist
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
-
+    y_train_indexes = y_train == target_digit
+    x_train, y_train = x_train[y_train_indexes], y_train[y_train_indexes]
+    y_test_indexes = y_test == target_digit
+    x_test, y_test = x_test[y_test_indexes], y_test[y_test_indexes]
     output_train_dir_path = os.path.join(output_dir_path, 'train')
     write(output_train_dir_path, train_sample_num, train_anomaly_ratio, image_max_size, image_min_size, x_train,
           y_train)
@@ -146,6 +149,7 @@ def main(output_dir_path, train_sample_num, train_anomaly_ratio, valid_sample_nu
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='main')
     parser.add_argument('--output_dir_path', type=str, default='~/.vaik-mnist-anomaly-dataset')
+    parser.add_argument('--target_digit', type=int, default=5)
     parser.add_argument('--train_sample_num', type=int, default=12500)
     parser.add_argument('--train_anomaly_ratio', type=float, default=0.2)
     parser.add_argument('--valid_sample_num', type=int, default=100)
