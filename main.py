@@ -23,7 +23,7 @@ def resize_and_padding(image, target_size):
     return pil_image, (padding_bottom, padding_right), (height, width)
 
 
-def draw_line(image, color_range=(-5, 5), width_range=(7, 12), count_range=(1, 2), radius_range=(1, 2)):
+def draw_line(image, color_range=(-5, 5), width_range=(2, 4), count_range=(1, 2), radius_range=(1, 2)):
     np_image = np.asarray(image)
     median_color = np.median(np_image[np_image > 0])
     black_ratio = np.sum(np_image == 0) / (np_image.shape[0] * np_image.shape[1])
@@ -47,7 +47,7 @@ def draw_line(image, color_range=(-5, 5), width_range=(7, 12), count_range=(1, 2
     return Image.fromarray(merge_np_image)
 
 
-def draw_point(image, ellipse_size_range=(10, 25), color_range=(-5, 5), width_range=(1, 4), count_range=(1, 3),
+def draw_point(image, ellipse_size_range=(5, 10), color_range=(-5, 5), width_range=(1, 4), count_range=(1, 3),
                radius_range=(1, 2)):
     np_image = np.asarray(image)
     median_color = np.median(np_image[np_image > 0])
@@ -156,8 +156,8 @@ if __name__ == '__main__':
     parser.add_argument('--train_anomaly_ratio', type=float, default=0.2)
     parser.add_argument('--valid_sample_num', type=int, default=100)
     parser.add_argument('--valid_anomaly_ratio', type=float, default=0.8)
-    parser.add_argument('--image_max_size', type=int, default=136)
-    parser.add_argument('--image_min_size', type=int, default=120)
+    parser.add_argument('--image_max_size', type=int, default=224)
+    parser.add_argument('--image_min_size', type=int, default=224)
     args = parser.parse_args()
 
     args.output_dir_path = os.path.expanduser(args.output_dir_path)
