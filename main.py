@@ -23,7 +23,7 @@ def resize_and_padding(image, target_size):
     return pil_image, (padding_bottom, padding_right), (height, width)
 
 
-def draw_line(image, color_range=(-5, 5), width_range=(2, 4), count_range=(1, 2), radius_range=(1, 2)):
+def draw_line(image, color_range=(-5, 5), width_range=(7, 12), count_range=(1, 2), radius_range=(1, 2)):
     np_image = np.asarray(image)
     median_color = np.median(np_image[np_image > 0])
     black_ratio = np.sum(np_image == 0) / (np_image.shape[0] * np_image.shape[1])
@@ -47,7 +47,7 @@ def draw_line(image, color_range=(-5, 5), width_range=(2, 4), count_range=(1, 2)
     return Image.fromarray(merge_np_image)
 
 
-def draw_point(image, ellipse_size_range=(3, 15), color_range=(-5, 5), width_range=(1, 4), count_range=(1, 3),
+def draw_point(image, ellipse_size_range=(10, 25), color_range=(-5, 5), width_range=(1, 4), count_range=(1, 3),
                radius_range=(1, 2)):
     np_image = np.asarray(image)
     median_color = np.median(np_image[np_image > 0])
