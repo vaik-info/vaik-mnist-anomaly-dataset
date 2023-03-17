@@ -156,8 +156,8 @@ if __name__ == '__main__':
     parser.add_argument('--train_anomaly_ratio', type=float, default=0.2)
     parser.add_argument('--valid_sample_num', type=int, default=100)
     parser.add_argument('--valid_anomaly_ratio', type=float, default=0.8)
-    parser.add_argument('--image_max_size', type=int, default=232)
-    parser.add_argument('--image_min_size', type=int, default=216)
+    parser.add_argument('--image_max_size', type=int, default=136)
+    parser.add_argument('--image_min_size', type=int, default=120)
     args = parser.parse_args()
 
     args.output_dir_path = os.path.expanduser(args.output_dir_path)
