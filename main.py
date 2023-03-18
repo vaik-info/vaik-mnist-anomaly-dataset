@@ -123,7 +123,7 @@ def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_
         output_anomaly_sub_key_gt_dir_path = os.path.join(output_sub_dir_path, 'ground_truth', process_key)
         os.makedirs(output_anomaly_sub_key_gt_dir_path, exist_ok=True)
         diff_pil_image = get_mask(pil_image, process_pil_image)
-        diff_pil_image.save(os.path.join(output_anomaly_sub_key_gt_dir_path, f'{file_index:04d}_{mnist_index:02d}.png'))
+        diff_pil_image.save(os.path.join(output_anomaly_sub_key_gt_dir_path, f'{file_index:04d}_{mnist_index:02d}_mask.png'))
 
 
 def main(output_dir_path, target_digit, train_sample_num, train_anomaly_ratio, valid_sample_num, valid_anomaly_ratio, image_max_size,
