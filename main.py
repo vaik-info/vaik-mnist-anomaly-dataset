@@ -86,7 +86,7 @@ def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_
     # train
     output_good_sub_dir_path = os.path.join(output_sub_dir_path, 'raw', 'good')
     os.makedirs(output_good_sub_dir_path, exist_ok=True)
-    train_transform = A.Compose([
+    transform = A.Compose([
         A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.1, rotate_limit=45, border_mode=cv2.BORDER_CONSTANT, always_apply=True),
         A.ISONoise(color_shift=(0.01, 0.05), intensity=(0.1, 0.5), always_apply=True),
         A.ImageCompression(quality_lower=99, quality_upper=100, compression_type=A.ImageCompression.ImageCompressionType.JPEG, p=0.25),
@@ -96,16 +96,10 @@ def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_
         pil_image = Image.fromarray(image).convert('RGB')
         pil_image, _, _ = resize_and_padding(pil_image, (
             random.randint(image_min_size, image_max_size), random.randint(image_min_size, image_max_size)))
-        transform_pil_image = Image.fromarray(train_transform(image=np.asarray(pil_image))['image'])
+        transform_pil_image = Image.fromarray(transform(image=np.asarray(pil_image))['image'])
         transform_pil_image.save(os.path.join(output_good_sub_dir_path, f'{file_index:04d}.png'))
 
     # test
-    test_transform = A.Compose([
-        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.1, rotate_limit=45, border_mode=cv2.BORDER_CONSTANT, always_apply=True),
-        A.ISONoise(color_shift=(0.01, 0.05), intensity=(0.1, 0.5), always_apply=True),
-        A.ImageCompression(quality_lower=99, quality_upper=100, compression_type=A.ImageCompression.ImageCompressionType.JPEG, p=0.25),
-        A.ImageCompression(quality_lower=99, quality_upper=100, compression_type=A.ImageCompression.ImageCompressionType.WEBP, p=0.25),
-    ])
     process_dict = {
         "line": draw_line,
         "point": draw_point,
@@ -116,7 +110,7 @@ def write(output_sub_dir_path, sample_num, anomaly_ratio, image_max_size, image_
         pil_image, _, _ = resize_and_padding(pil_image, (
             random.randint(image_min_size, image_max_size), random.randint(image_min_size, image_max_size)))
 
-        pil_image = Image.fromarray(test_transform(image=np.asarray(pil_image))['image'])
+        pil_image = Image.fromarray(transform(image=np.asarray(pil_image))['image'])
         process_key = random.choice(list(process_dict.keys()))
         process_pil_image = process_dict[process_key](pil_image)
 
