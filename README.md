@@ -4,7 +4,7 @@ Create MNIST anomaly detection dataset
 
 ## Example
 
-![vaik-mnist-anomaly-dataset](https://user-images.githubusercontent.com/116471878/225503307-4c28b9e2-981c-4413-8cad-0b7d77f31231.png)
+![mnist-anomaly-dataset](https://user-images.githubusercontent.com/116471878/226257754-63bb05af-a691-4c63-98d3-b45a4ad527fa.png)
 
 
 ## Usage
@@ -62,3 +62,5 @@ python main.py --output_dir_path ~/.vaik-mnist-anomaly-dataset \
 ```
 
 - good image, anomaly image
+
+![mnist-anomaly-dataset](https://user-images.githubusercontent.com/116471878/226257754-63bb05af-a691-4c63-98d3-b45a4ad527fa.png)
