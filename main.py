@@ -28,7 +28,7 @@ def write(output_sub_dir_path, sample_num, image_max_size, image_min_size, x):
         pil_image = Image.fromarray(image).convert('RGB')
         pil_image, _, _ = resize_and_padding(pil_image, (
             random.randint(image_min_size, image_max_size), random.randint(image_min_size, image_max_size)))
-        pil_image.save(os.path.join(output_sub_dir_path, f'{file_index:04d}.png'))
+        pil_image.save(os.path.join(output_sub_dir_path, f'{file_index:08d}.png'))
 
 
 def main(output_dir_path, target_digit, train_sample_num, valid_sample_num, image_max_size, image_min_size):
@@ -52,8 +52,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='main')
     parser.add_argument('--output_dir_path', type=str, default='~/.vaik-mnist-anomaly-dataset')
     parser.add_argument('--target_digit', type=int, default=5)
-    parser.add_argument('--train_sample_num', type=int, default=10000)
-    parser.add_argument('--valid_sample_num', type=int, default=100)
+    parser.add_argument('--train_sample_num', type=int, default=10)
+    parser.add_argument('--valid_sample_num', type=int, default=10)
     parser.add_argument('--image_max_size', type=int, default=232)
     parser.add_argument('--image_min_size', type=int, default=216)
     args = parser.parse_args()
