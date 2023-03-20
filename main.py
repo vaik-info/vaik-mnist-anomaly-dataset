@@ -52,7 +52,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='main')
     parser.add_argument('--output_dir_path', type=str, default='~/.vaik-mnist-anomaly-dataset')
     parser.add_argument('--target_digit', type=int, default=5)
-    parser.add_argument('--train_sample_num', type=int, default=10)
+    parser.add_argument('--train_sample_num', type=int, default=10000)
     parser.add_argument('--valid_sample_num', type=int, default=10)
     parser.add_argument('--image_max_size', type=int, default=232)
     parser.add_argument('--image_min_size', type=int, default=216)
